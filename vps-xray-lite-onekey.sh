@@ -1,11 +1,6 @@
 #!/usr/bin/env bash
 set -e
 
-# -----------------------------
-# VPS Xray Lite 一键部署脚本
-# 支持 VLESS+TLS/WS/gRPC/Reality/Tuic5 + IPv6 + 防扫
-# -----------------------------
-
 XRAY_BIN="/usr/local/bin/xray"
 XRAY_DIR="/etc/xray"
 CONF="$XRAY_DIR/config.json"
@@ -57,25 +52,4 @@ make_config() {
   PORT_TLS=$(rand_port)
   PORT_WS=$(rand_port)
   PORT_GRPC=$(rand_port)
-  PORT_REALITY=$(rand_port)
-
-  UUID=$(cat /proc/sys/kernel/random/uuid)
-  WS_PATH="/$(tr -dc a-z0-9 </dev/urandom | head -c8)"
-  GRPC_SVC="grpc$(tr -dc a-z0-9 </dev/urandom | head -c6)"
-  REALITY_SNI="$DOMAIN"
-  REALITY_PUBLIC=$(openssl rand -base64 32)
-  REALITY_SID=$(openssl rand -hex 6)
-
-  cat > "$CONF" <<EOF
-{
-  "log": {"loglevel":"warning"},
-  "inbounds": [
-    {
-      "port": $PORT_TLS,
-      "protocol": "vless",
-      "settings": {"clients":[{"id":"$UUID","flow":"xtls-rprx-vision"}],"decryption":"none"},
-      "streamSettings":{
-        "security":"tls",
-        "tlsSettings":{
-          "serverName":"$DOMAIN",
-          "
+  PORT_REALIT_
